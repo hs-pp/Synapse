@@ -1,0 +1,16 @@
+{
+    "name": "Synapse",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6cd805283c9114b9984c935052c3f31c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
