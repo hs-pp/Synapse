@@ -64,23 +64,29 @@ namespace SynapseSystem
 
             public void UnsubscribeFromEvent(Action<T> callback)
             {
-                m_callbacks.Remove(callback);
+                m_callbacks.RemoveAll(existing => existing == callback);
+                m_singleUseCallbacks.RemoveAll(existing => existing == callback);
             }
 
             public void TriggerCallbacks(T message)
             {
                 //Debug.Log($"[Synapse] Triggered event {typeof(T).Name}");
                 
-                foreach (var callback in m_callbacks)
+                // Make copies to make it resistant to array changes from within the callbacks.
+                var callbacksSnapshot = m_callbacks.ToArray();
+                var singleUseSnapshot = m_singleUseCallbacks.ToArray();
+
+                m_singleUseCallbacks.Clear();
+
+                foreach (var callback in callbacksSnapshot)
                 {
                     callback?.Invoke(message);
                 }
 
-                foreach (var callback in m_singleUseCallbacks)
+                foreach (var callback in singleUseSnapshot)
                 {
                     callback?.Invoke(message);
                 }
-                m_singleUseCallbacks.Clear();
             }
         }
     }
